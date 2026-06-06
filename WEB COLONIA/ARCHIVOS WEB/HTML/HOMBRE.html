@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Perfum — Catálogo Hombre</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:wght@300;400;500&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #06050a;
+            --dark: #0e0c14;
+            --dark-card: #13111a;
+            --gold: #c9a84c;
+            --gold-light: #e5c97a;
+            --gold-dim: #7a6030;
+            --white: #f5f0e8;
+            --white-dim: #bdb098;
+            --muted: #6b6478;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--black); color: var(--white); font-family: 'Cormorant Garamond', serif; overflow-x: hidden; }
+        .header { position: sticky; top: 0; z-index: 100; background: rgba(6,5,10,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(201,168,76,0.2); padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+        .header-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.3em; color: var(--gold-light); }
+        .header-brand span { color: var(--gold); font-size: 0.7rem; }
+        .header-sub { font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase; }
+        .hero { text-align: center; padding: 5rem 2rem 4rem; border-bottom: 1px solid rgba(201,168,76,0.1); background: radial-gradient(ellipse at center, rgba(26,42,58,0.3) 0%, transparent 70%); }
+        .hero-pre { font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.5em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 1.5rem; }
+        .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 400; color: var(--white); line-height: 1.1; margin-bottom: 1rem; }
+        .hero-title em { color: var(--gold-light); font-style: italic; }
+        .hero-divider { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.5rem auto; }
+        .search-wrap { padding: 2rem 3rem; display: flex; justify-content: center; }
+        .search-input { width: 100%; max-width: 500px; background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.2); color: var(--white); font-family: 'Cormorant Garamond', serif; font-size: 1rem; padding: 0.75rem 1.5rem; outline: none; transition: border-color 0.3s; }
+        .search-input::placeholder { color: var(--muted); font-style: italic; }
+        .search-input:focus { border-color: var(--gold); }
+        .filters { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; padding: 0 3rem 2rem; border-bottom: 1px solid rgba(201,168,76,0.08); }
+        .filter-btn { font-family: 'Raleway', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.45rem 1.1rem; border: 1px solid rgba(201,168,76,0.25); background: transparent; color: var(--white-dim); cursor: pointer; transition: all 0.3s; }
+        .filter-btn:hover, .filter-btn.active { background: var(--gold); color: var(--black); border-color: var(--gold); }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1px; background: rgba(201,168,76,0.08); }
+        .perfume-card { background: var(--dark); padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden; }
+        .perfume-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--gold-dim); transition: background 0.3s; }
+        .perfume-card:hover { background: var(--dark-card); transform: translateY(-2px); z-index: 1; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .perfume-card:hover::before { background: var(--gold); }
+        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+        .card-category { font-family: 'Raleway', sans-serif; font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-dim); padding: 0.3rem 0.7rem; border: 1px solid rgba(201,168,76,0.2); }
+        .card-pg { font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--gold); font-weight: 700; }
+        .card-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem; line-height: 1.3; }
+        .card-brand { font-family: 'Raleway', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; }
+        .card-divider { height: 1px; background: rgba(201,168,76,0.1); margin: 1rem 0; }
+        .card-notes-label { font-family: 'Raleway', sans-serif; font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.7rem; }
+        .card-notes { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .note-tag { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; color: var(--white-dim); padding: 0.2rem 0.6rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); transition: all 0.2s; }
+        .perfume-card:hover .note-tag { border-color: rgba(201,168,76,0.2); color: var(--white); }
+        .footer { text-align: center; padding: 4rem 2rem; border-top: 1px solid rgba(201,168,76,0.1); }
+        .footer-logo { font-family: 'Playfair Display', serif; font-size: 1rem; letter-spacing: 0.3em; color: var(--gold-light); margin-bottom: 0.5rem; }
+        .footer-copy { font-family: 'Raleway', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-brand"><span>✦ </span>GOLDEN PERFUM<span> ✦</span></div>
+    <div class="header-sub">Catálogo Hombre</div>
+</header>
+
+<div class="hero">
+    <p class="hero-pre">✦ Colección Masculina ✦</p>
+    <h1 class="hero-title">FRAGANCIAS<br><em>para Hombre</em></h1>
+    <div class="hero-divider"></div>
+</div>
+
+<div class="search-wrap">
+    <input class="search-input" type="text" id="searchInput" placeholder="Buscar perfume, marca, nota olfativa...">
+</div>
+
+<div class="filters">
+    <button class="filter-btn active" onclick="filterBy('todos',event)">Todos</button>
+    <button class="filter-btn" onclick="filterBy('AMADERADA',event)">Amaderada</button>
+    <button class="filter-btn" onclick="filterBy('ORIENTAL',event)">Oriental</button>
+    <button class="filter-btn" onclick="filterBy('FOUGÈRE',event)">Fougère</button>
+    <button class="filter-btn" onclick="filterBy('ACUÁTICA',event)">Acuática</button>
+    <button class="filter-btn" onclick="filterBy('CÍTRICA',event)">Cítrica</button>
+    <button class="filter-btn" onclick="filterBy('CUERO',event)">Cuero</button>
+    <button class="filter-btn" onclick="filterBy('VERDE',event)">Verde</button>
+    <button class="filter-btn" onclick="filterBy('ESPECIADA',event)">Especiada</button>
+</div>
+
+<div id="catalogGrid" class="catalog-grid"></div>
+
+<footer class="footer">
+    <div class="footer-logo">✦ GOLDEN PERFUM ✦</div>
+    <p class="footer-copy">© 2025 · Todos los derechos reservados</p>
+</footer>
+
+<script>
+const perfumes = [
+    // Adolfo Domínguez
+    { pg:"Nº1",  nombre:"Agua Fresca", marca:"Adolfo Domínguez", categoria:"FOUGÈRE", notas:["Bergamota","Mandarina","Lavanda","Romero","Bayas de enebro","Pimienta"] },
+    { pg:"Nº2",  nombre:"Bambú", marca:"Adolfo Domínguez", categoria:"AMADERADA ACUÁTICA", notas:["Bambú","Ámbar","Flor del algodonero","Agua de mar","Jazmín"] },
+    // Giorgio Armani
+    { pg:"Nº3",  nombre:"Acqua di Gio", marca:"Giorgio Armani", categoria:"ACUÁTICA", notas:["Naranja","Lima","Ciclamen","Notas marinas","Romero","Pachulí"] },
+    { pg:"Nº4",  nombre:"Armani Code", marca:"Giorgio Armani", categoria:"ORIENTAL ESPECIADA", notas:["Bergamota","Limón","Anís Estrellado","Madera de gaiac","Tabaco","Haba tonka"] },
+    { pg:"Nº54", nombre:"Stronger with you", marca:"Giorgio Armani", categoria:"FOUGÈRE", notas:["Cardamomo","Pimienta rosa","Violetas","Vainilla","Castañas","Cedro"] },
+    { pg:"Nº1104",nombre:"Acqua di Giò Profumo", marca:"Giorgio Armani", categoria:"ACUÁTICA", notas:["Notas marinas","Bergamota","Romero","Salvia","Incienso","Pachulí"] },
+    { pg:"Nº1107",nombre:"Stronger with you Intensely", marca:"Giorgio Armani", categoria:"ORIENTAL FOUGÈRE", notas:["Pimienta rosa","Violeta","Tófe","Canela","Haba tonka","Ámbar"] },
+    // Azzaro
+    { pg:"Nº47", nombre:"Chrome", marca:"Azzaro", categoria:"CÍTRICA", notas:["Romero","Piña","Cilantro","Jazmín","Haba tonka","Cedro"] },
+    // Bvlgari
+    { pg:"Nº6",  nombre:"Aqva Pour Homme", marca:"Bvlgari", categoria:"ACUÁTICA", notas:["Naranja","Mandarina","Algas marinas","Lavanda","Pachulí","Notas Amaderadas"] },
+    { pg:"Nº67", nombre:"Bvlgari Man Wood Essence", marca:"Bvlgari", categoria:"AMADERADA", notas:["Limón","Cilantro","Vetiver","Ciprés","Benjuí"] },
+    // Burberry
+    { pg:"Nº85", nombre:"Hero", marca:"Burberry", categoria:"AMADERADA", notas:["Bergamota","Enebro","Pimienta negra","Cedro del Atlas","Cedro de Virginia","Cedro del Himalaya"] },
+    // Calvin Klein
+    { pg:"Nº55", nombre:"Eternity For Men", marca:"Calvin Klein", categoria:"FOUGÈRE", notas:["Lavanda","Mandarina","Cilantro","Azucena","Sándalo","Vetiver"] },
+    // Carolina Herrera
+    { pg:"Nº7",  nombre:"CH Men", marca:"Carolina Herrera", categoria:"ORIENTAL ESPECIADA", notas:["Bergamota","Pomelo","Azafrán","Nuez moscada","Musgo","Vainilla"] },
+    { pg:"Nº8",  nombre:"212 Vip Men", marca:"Carolina Herrera", categoria:"ORIENTAL AMADERADA", notas:["Caviar","Vodka","Ginebra","Menta","Ámbar","Notas Amaderadas"] },
+    { pg:"Nº68", nombre:"Bad Boy", marca:"Carolina Herrera", categoria:"ORIENTAL ESPECIADA", notas:["Bergamota","Pimienta blanca","Cedro","Salvia","Haba tonka","Cacao"] },
+    { pg:"Nº78", nombre:"212 Heroes", marca:"Carolina Herrera", categoria:"FRUTAL", notas:["Pera","Marihuana","Geranio","Salvia","Jengibre","Cuero"] },
+    { pg:"Nº84", nombre:"212 Men", marca:"Carolina Herrera", categoria:"FLORAL AMADERADA", notas:["Pomelo","Bergamota","Jengibre","Violeta","Sándalo","Madera de gaiac"] },
+    // Cartier
+    { pg:"Nº60", nombre:"Declaration", marca:"Cartier", categoria:"FLORAL AMADERADA", notas:["Alcaravea","Cilantro","Canela","Jazmín","Té","Cedro"] },
+    // Chanel
+    { pg:"Nº9",  nombre:"Egoiste Platinum", marca:"Chanel", categoria:"FLORAL AMADERADA", notas:["Romero","Nerolí","Salvia","Jazmín","Sándalo","Musgo"] },
+    { pg:"Nº10", nombre:"Allure Pour Homme", marca:"Chanel", categoria:"ORIENTAL AMADERADA", notas:["Jengibre","Mandarina","Gardenia","Fresia","Coco","Vainilla"] },
+    { pg:"Nº11", nombre:"Allure Homme Sport", marca:"Chanel", categoria:"AMADERADA ESPECIADA", notas:["Naranja","Mandarina","Pimienta","Haba tonka","Cedro","Neroli"] },
+    { pg:"Nº57", nombre:"Bleu de Chanel", marca:"Chanel", categoria:"AMADERADA", notas:["Nuez moscada","Sándalo","Jengibre","Pachulí","Menta","Jazmín"] },
+    // Davidoff
+    { pg:"Nº89", nombre:"Cool Water", marca:"Davidoff", categoria:"ACUÁTICA", notas:["Agua de mar","Lavanda","Menta","Sándalo","Cedro","Tabaco"] },
+    // Diesel
+    { pg:"Nº15", nombre:"Only The Brave", marca:"Diesel", categoria:"ORIENTAL AMADERADA", notas:["Limón","Mandarina","Cilantro","Cedro","Benjuí","Cuero"] },
+    { pg:"Nº49", nombre:"Bad", marca:"Diesel", categoria:"AMADERADA", notas:["Bergamota","Lavanda","Caviar","Tabaco","Lirio","Notas Amaderadas"] },
+    { pg:"Nº90", nombre:"D by Diesel", marca:"Diesel", categoria:"AROMÁTICA", notas:["Lavanda","Vainilla","Jengibre","Bergamota","Flor de algodón","Amberwood"] },
+    // Dior
+    { pg:"Nº42", nombre:"Fahrenheit", marca:"Dior", categoria:"FLORAL AMADERADA", notas:["Lavanda","Manzanilla","Nuez Moscada","Madreselva","Haba tonka","Pachulí"] },
+    { pg:"Nº43", nombre:"Sauvage", marca:"Dior", categoria:"FOUGÈRE", notas:["Pimienta","Bergamota","Geranio","Lavanda","Cedro","Rosa"] },
+    { pg:"Nº46", nombre:"Dior Homme", marca:"Dior", categoria:"FLORAL AMADERADA", notas:["Lavanda","Salvia","Iris","Cacao","Cardamomo","Pachulí"] },
+    { pg:"Nº87", nombre:"Sauvage Elixir", marca:"Dior", categoria:"AMADERADA", notas:["Canela","Pomelo","Lavanda","Regaliz","Pachulí","Cardamomo"] },
+    // Dolce & Gabbana
+    { pg:"Nº13", nombre:"The One for Men", marca:"Dolce & Gabbana", categoria:"AMADERADA ESPECIADA", notas:["Cilantro","Albahaca","Jengibre","Flor del naranjo","Ámbar","Tabaco"] },
+    { pg:"Nº14", nombre:"Light Blue pour Homme", marca:"Dolce & Gabbana", categoria:"CÍTRICA", notas:["Mandarina","Pomelo","Bergamota","Romero","Pimienta","Incienso"] },
+    { pg:"Nº59", nombre:"Intenso", marca:"Dolce & Gabbana", categoria:"AMADERADA", notas:["Agua","Albahaca","Tabaco","Salvia","Sándalo","Ciprés"] },
+    { pg:"Nº69", nombre:"K by Dolce & Gabbana", marca:"Dolce & Gabbana", categoria:"AMADERADA", notas:["Naranja sanguina","Pimiento morrón","Lavanda","Cedro","Pachulí","Vetiver"] },
+    { pg:"Nº1105",nombre:"Devotion Pour Homme", marca:"Dolce & Gabbana", categoria:"AMADERADA ESPECIADA", notas:["Limón","Café","Pachulí"] },
+    // Gucci
+    { pg:"Nº65", nombre:"Guilty Pour Homme", marca:"Gucci", categoria:"AMADERADA", notas:["Lavanda","Limón","Flor del naranjo","Pachulí","Cedro","Vainilla"] },
+    // Guerlain
+    { pg:"Nº91", nombre:"Habit Rouge L'Instinct", marca:"Guerlain", categoria:"CUERO", notas:["Bergamota","Pomelo","Marihuana","Rosa","Cuero","Pachulí"] },
+    // Givenchy
+    { pg:"Nº70", nombre:"Gentleman", marca:"Givenchy", categoria:"AMADERADA", notas:["Pimienta","Lavanda","Canela","Clavo","Haba tonka","Vainilla"] },
+    // Hermès
+    { pg:"Nº21", nombre:"Terre D'Hermes", marca:"Hermès", categoria:"AMADERADA ESPECIADA", notas:["Naranja","Pomelo","Pimienta","Pachulí","Cedro","Benjuí"] },
+    { pg:"Nº98", nombre:"Terre d'Hermes Eau Givree", marca:"Hermès", categoria:"AMADERADA", notas:["Cidra","Baya de enebro","Timur","Notas Amaderadas","Notas minerales"] },
+    // Hugo Boss
+    { pg:"Nº16", nombre:"Hugo", marca:"Hugo Boss", categoria:"VERDE", notas:["Lavanda","Manzana","Menta","Albahaca","Salvia","Geranio"] },
+    { pg:"Nº17", nombre:"Boss Bottled", marca:"Hugo Boss", categoria:"AMADERADA ESPECIADA", notas:["Ciruela","Geranio","Caoba","Canela","Olivo","Cedro"] },
+    { pg:"Nº18", nombre:"Boss Bottled Night", marca:"Hugo Boss", categoria:"AMADERADA", notas:["Lavanda","Abedul","Violeta","Notas Amaderadas"] },
+    { pg:"Nº19", nombre:"Hugo Just Different", marca:"Hugo Boss", categoria:"VERDE", notas:["Cilantro","Menta","Albahaca","Manzana","Pachulí","Incienso"] },
+    { pg:"Nº20", nombre:"Boss The Scent", marca:"Hugo Boss", categoria:"ESPECIADA", notas:["Jengibre","Lavanda","Cuero"] },
+    { pg:"Nº1100",nombre:"Boss Bottled Elixir", marca:"Hugo Boss", categoria:"ÁMBAR AMADERADA", notas:["Incienso","Cardamomo","Vetiver","Pachulí","Landano","Cedro"] },
+    { pg:"Nº1106",nombre:"Bottled Absolu", marca:"Hugo Boss", categoria:"AMADERADA", notas:["Incienso","Cuero","Mirra","Pachulí","Cedro","Davana"] },
+    { pg:"Nº1111",nombre:"Boss Bottled Beyond", marca:"Hugo Boss", categoria:"CUERO", notas:["Jengibre","Cuero","Notas amaderadas"] },
+    // Issey Miyake
+    { pg:"Nº22", nombre:"L'Eau D'Issey Por Homme", marca:"Issey Miyake", categoria:"AMADERADA ACUÁTICA", notas:["Cilantro","Salvia","Nuez Moscada","Azafrán","Sándalo","Tabaco"] },
+    { pg:"Nº86", nombre:"Fusion d'Issey", marca:"Issey Miyake", categoria:"FOUGÈRE", notas:["Leche de coco","Néctar de higo","Romero","Cardamomo","Notas Amaderadas","Pachulí"] },
+    { pg:"Nº1102",nombre:"Le Sel d'Issey", marca:"Issey Miyake", categoria:"AMADERADA ACUÁTICA", notas:["Sal de mar","Jengibre","Algas marinas","Vetiver","Cedro","Musgo de roble"] },
+    // Jean Paul Gaultier
+    { pg:"Nº23", nombre:"Le Male", marca:"Jean Paul Gaultier", categoria:"ORIENTAL FOUGÈRE", notas:["Lavanda","Cardamomo","Alcaravea","Flor del naranjo","Sándalo","Vainilla"] },
+    { pg:"Nº48", nombre:"Ultra Male", marca:"Jean Paul Gaultier", categoria:"ORIENTAL FOUGÈRE", notas:["Bergamota","Menta","Canela","Vainilla","Cedro","Pachulí"] },
+    { pg:"Nº71", nombre:"Le Beau", marca:"Jean Paul Gaultier", categoria:"AMADERADA", notas:["Bergamota","Coco","Haba tonka"] },
+    { pg:"Nº75", nombre:"Le Male Le Parfum", marca:"Jean Paul Gaultier", categoria:"ORIENTAL AMADERADA", notas:["Cardamomo","Iris","Lavanda","Notas Amaderadas","Vainilla"] },
+    { pg:"Nº80", nombre:"Scandal Pour Homme", marca:"Jean Paul Gaultier", categoria:"AMADERADA", notas:["Mandarina","Esclarea","Caramelo","Haba tonka","Vetiver"] },
+    { pg:"Nº1103",nombre:"Le Male Elixir", marca:"Jean Paul Gaultier", categoria:"ORIENTAL FOUGÈRE", notas:["Benjuí","Menta","Lavanda","Miel","Vainilla","Tabaco"] },
+    { pg:"Nº1109",nombre:"Le Beau Paradise Garden", marca:"Jean Paul Gaultier", categoria:"VERDE", notas:["Notas verdes","Menta","Coco","Sal","Haba tonka","Sándalo"] },
+    // Jesús del Pozo
+    { pg:"Nº66", nombre:"Halloween Man", marca:"Jesús del Pozo", categoria:"ORIENTAL AMADERADA", notas:["Mandarina","Albahaca","Lavanda","Canela","Vainilla","Cuero"] },
+    // Lacoste
+    { pg:"Nº77", nombre:"L.12.12 Blanc For Him", marca:"Lacoste Fragrances", categoria:"AMADERADA", notas:["Limón caviar","Eucalipto","Cardamomo","Cedro","Pino"] },
+    // Loewe
+    { pg:"Nº25", nombre:"Esencia pour Homme", marca:"Loewe", categoria:"FOUGÈRE", notas:["Lavanda","Bergamota","Albahaca","Jazmín","Haba tonka","Abeto"] },
+    { pg:"Nº26", nombre:"Solo Loewe", marca:"Loewe", categoria:"ORIENTAL", notas:["Lavanda","Mandarina","Guayaba","Nuez Moscada","Pimienta rosa","Anís"] },
+    { pg:"Nº27", nombre:"Loewe 7", marca:"Loewe", categoria:"FLORAL AMADERADA", notas:["Pimienta","Manzana","Rosa","Nerolí","Cedro","Vetiver"] },
+    { pg:"Nº51", nombre:"Solo Loewe Esencial", marca:"Loewe", categoria:"AMADERADA", notas:["Naranja","Menta","Nuez moscada","Romero","Pachulí","Madera de gaiac"] },
+    { pg:"Nº94", nombre:"Solo Loewe Cedro", marca:"Loewe", categoria:"AMADERADA", notas:["Mandarina","Pimienta rosa","Nuez Moscada","Lavanda","Cedro","Benjuí"] },
+    // Montblanc
+    { pg:"Nº61", nombre:"Legend Spirit", marca:"Montblanc", categoria:"AMADERADA", notas:["Bergamota","Pimienta rosa","Cardamomo","Lavanda","Notas acuáticas","Maderas blancas"] },
+    // Moschino
+    { pg:"Nº96", nombre:"Toy Boy", marca:"Moschino", categoria:"AMADERADA", notas:["Pimienta rosa","Pera","Rosa","Clavo de olor","Sándalo","Ámbar"] },
+    // Paco Rabanne
+    { pg:"Nº29", nombre:"1 Million", marca:"Paco Rabanne", categoria:"AMADERADA ESPECIADA", notas:["Pomelo","Menta","Rosa","Canela","Pachulí","Notas Amaderadas"] },
+    { pg:"Nº30", nombre:"Invictus", marca:"Paco Rabanne", categoria:"AMADERADA ACUÁTICA", notas:["Pomelo","Notas marinas","Laurel","Jazmín","Madera de gaiac","Musgo"] },
+    { pg:"Nº31", nombre:"Black XS", marca:"Paco Rabanne", categoria:"ORIENTAL AMADERADA", notas:["Salvia","Limón","Cardamomo","Praliné","Pachulí","Canela"] },
+    { pg:"Nº32", nombre:"Ultraviolet", marca:"Paco Rabanne", categoria:"ORIENTAL AMADERADA", notas:["Ámbar","Menta","Vetiver","Pimienta","Musgo","Vainilla"] },
+    { pg:"Nº50", nombre:"1 Millon Prive", marca:"Paco Rabanne", categoria:"ORIENTAL AMADERADA", notas:["Mandarina","Canela","Tabaco","Pachulí","Haba tonka"] },
+    { pg:"Nº53", nombre:"Pure XS", marca:"Paco Rabanne", categoria:"ESPECIADA", notas:["Jengibre","Tomillo","Vainilla","Canela","Cedro","Azúcar"] },
+    { pg:"Nº79", nombre:"Phantom", marca:"Paco Rabanne", categoria:"AMADERADA", notas:["Lavanda","Entusiasmo de limón","Manzana","Humo","Vainilla","Vetiver"] },
+    { pg:"Nº92", nombre:"Invictus Victory", marca:"Paco Rabanne", categoria:"ÁMBAR", notas:["Pimienta rosa","Limón","Lavanda","Incienso","Haba tonka","Ámbar"] },
+    { pg:"Nº93", nombre:"1 Million Elixir", marca:"Paco Rabanne", categoria:"AMADERADA", notas:["Manzana","Rosa","Damasco","Cedro","Olivo","Vainilla"] },
+    { pg:"Nº95", nombre:"Invictus Victory Elixir", marca:"Paco Rabanne", categoria:"ÁMBAR", notas:["Vainilla","Incienso de olíbano","Haba tonka","Ámbar"] },
+    { pg:"Nº1101",nombre:"Million Gold", marca:"Paco Rabanne", categoria:"AMADERADA", notas:["Sándalo","Especias","Mandarina","Cedro"] },
+    // Prada
+    { pg:"Nº1110",nombre:"Paradigme", marca:"Prada", categoria:"ORIENTAL AMADERADA", notas:["Geranio Bourbon","Bergamota","Geranio de olor","Bálsamo del Perú","Madera de Gaiac","Benjuí"] },
+    // Ralph Lauren
+    { pg:"Nº35", nombre:"Polo Blue", marca:"Ralph Lauren", categoria:"FOUGÈRE", notas:["Melón","Pepino","Albahaca","Salvia","Geranio","Notas Amaderadas"] },
+    { pg:"Nº76", nombre:"Polo Red", marca:"Ralph Lauren", categoria:"AMADERADA", notas:["Arándanos","Pomelo","Azafrán","Salvia","Café","Notas Amaderadas"] },
+    // Rochas
+    { pg:"Nº34", nombre:"Rochas Man", marca:"Rochas", categoria:"AMADERADA ESPECIADA", notas:["Lavanda","Bergamota","Frambuesa","Jazmín","Sándalo","Vainilla"] },
+    // Scalpers
+    { pg:"Nº99", nombre:"Scalpers The Club", marca:"Scalpers", categoria:"AMADERADA", notas:["Cacao","Pomelo","Tabaco","Jengibre","Notas Amaderadas","Ámbar gris"] },
+    // Thierry Mugler
+    { pg:"Nº37", nombre:"A* Men", marca:"Thierry Mugler", categoria:"ORIENTAL AMADERADA", notas:["Cilantro","Miel","Caramelo","Lavanda","Sándalo","Café"] },
+    // Tommy Hilfiger
+    { pg:"Nº36", nombre:"Tommy", marca:"Tommy Hilfiger", categoria:"CÍTRICA", notas:["Menta","Pomelo","Arándanos","Manzana","Cactus","Flor de algodón"] },
+    // Valentino
+    { pg:"Nº58", nombre:"Valentino Uomo", marca:"Valentino", categoria:"CUERO", notas:["Bergamota","Mirto","Café","Chocolate","Avellanas","Cedro"] },
+    { pg:"Nº1108",nombre:"Valentino Uomo Born In Roma Intense", marca:"Valentino", categoria:"ORIENTAL VAINILLA", notas:["Vainilla","Lavanda","Vetiver"] },
+    // Versace
+    { pg:"Nº45", nombre:"Eros", marca:"Versace", categoria:"FOUGÈRE", notas:["Menta","Limón","Haba tonka","Geranio","Vainilla","Cedro"] },
+    // Victor & Rolf
+    { pg:"Nº38", nombre:"Spicebomb", marca:"Victor&Rolf", categoria:"AMADERADA ESPECIADA", notas:["Bergamota","Pimienta rosa","Azafrán","Pimentón dulce","Tabaco","Cuero"] },
+    // Yves Saint Laurent
+    { pg:"Nº39", nombre:"La Nuit de L'Homme", marca:"Yves Saint Laurent", categoria:"AMADERADA ESPECIADA", notas:["Cardamomo","Bergamota","Cedro","Lavanda","Vetiver","Alcaravea"] },
+    { pg:"Nº40", nombre:"Opium Pour Homme", marca:"Yves Saint Laurent", categoria:"ORIENTAL ESPECIADA", notas:["Grosella negra","Anís","Pimienta","Cedro","Vainilla","Bourbon"] },
+    { pg:"Nº63", nombre:"Y", marca:"Yves Saint Laurent", categoria:"AMADERADA", notas:["Bergamota","Jengibre","Violeta","Manzana","Incienso","Abeto"] },
+    { pg:"Nº97", nombre:"MYSLF", marca:"Yves Saint Laurent", categoria:"AMADERADA", notas:["Bergamota de Calabria","Bergamota","Flor del naranjo","Ambrofix","Pachulí"] },
+    // Zadig & Voltaire
+    { pg:"Nº56", nombre:"This is Him", marca:"Zadig&Voltaire", categoria:"ORIENTAL AMADERADA", notas:["Pomelo","Pimienta","Incienso","Sándalo","Vainilla"] },
+];
+
+let activeFilter = 'todos';
+
+function renderCards(list) {
+    const grid = document.getElementById('catalogGrid');
+    if (list.length === 0) {
+        grid.innerHTML = '<div style="padding:4rem;text-align:center;color:var(--muted);font-family:Cormorant Garamond,serif;font-size:1.2rem;font-style:italic;grid-column:1/-1;">No se encontraron fragancias</div>';
+        return;
+    }
+    grid.innerHTML = list.map(p => `
+        <div class="perfume-card">
+            <div class="card-top">
+                <span class="card-category">${p.categoria}</span>
+                <span class="card-pg">${p.pg}</span>
+            </div>
+            <div class="card-name">${p.nombre}</div>
+            <div class="card-brand">${p.marca}</div>
+            <div class="card-divider"></div>
+            <div class="card-notes-label">Notas olfativas</div>
+            <div class="card-notes">
+                ${p.notas.map(n => `<span class="note-tag">${n}</span>`).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterBy(filter, e) {
+    activeFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    applyFilters();
+}
+
+function applyFilters() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    let list = perfumes;
+    if (activeFilter !== 'todos') {
+        list = list.filter(p => p.categoria.toUpperCase().includes(activeFilter.toUpperCase()));
+    }
+    if (q) {
+        list = list.filter(p =>
+            p.nombre.toLowerCase().includes(q) ||
+            p.marca.toLowerCase().includes(q) ||
+            p.notas.some(n => n.toLowerCase().includes(q)) ||
+            p.categoria.toLowerCase().includes(q) ||
+            p.pg.toLowerCase().includes(q)
+        );
+    }
+    renderCards(list);
+}
+
+document.getElementById('searchInput').addEventListener('input', applyFilters);
+renderCards(perfumes);
+</script>
+</body>
+</html>

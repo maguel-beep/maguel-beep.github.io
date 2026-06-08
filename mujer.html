@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Perfum — Catálogo Mujer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:wght@300;400;500&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #06050a; --dark: #0e0c14; --dark-card: #13111a;
+            --gold: #c9a84c; --gold-light: #e5c97a; --gold-dim: #7a6030;
+            --white: #f5f0e8; --white-dim: #bdb098; --muted: #6b6478;
+            --accent: #3a1a2a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--black); color: var(--white); font-family: 'Cormorant Garamond', serif; overflow-x: hidden; }
+        .header { position: sticky; top: 0; z-index: 100; background: rgba(6,5,10,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(201,168,76,0.2); padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+        .header-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.3em; color: var(--gold-light); }
+        .header-brand span { color: var(--gold); font-size: 0.7rem; }
+        .header-sub { font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase; }
+        .hero { text-align: center; padding: 5rem 2rem 4rem; border-bottom: 1px solid rgba(201,168,76,0.1); background: radial-gradient(ellipse at center, rgba(58,26,42,0.3) 0%, transparent 70%); }
+        .hero-pre { font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.5em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 1.5rem; }
+        .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 400; color: var(--white); line-height: 1.1; margin-bottom: 1rem; }
+        .hero-title em { color: var(--gold-light); font-style: italic; }
+        .hero-divider { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.5rem auto; }
+        .search-wrap { padding: 2rem 3rem; display: flex; justify-content: center; }
+        .search-input { width: 100%; max-width: 500px; background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.2); color: var(--white); font-family: 'Cormorant Garamond', serif; font-size: 1rem; padding: 0.75rem 1.5rem; outline: none; transition: border-color 0.3s; }
+        .search-input::placeholder { color: var(--muted); font-style: italic; }
+        .search-input:focus { border-color: var(--gold); }
+        .filters { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; padding: 0 3rem 2rem; border-bottom: 1px solid rgba(201,168,76,0.08); }
+        .filter-btn { font-family: 'Raleway', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.45rem 1.1rem; border: 1px solid rgba(201,168,76,0.25); background: transparent; color: var(--white-dim); cursor: pointer; transition: all 0.3s; }
+        .filter-btn:hover, .filter-btn.active { background: var(--gold); color: var(--black); border-color: var(--gold); }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1px; background: rgba(201,168,76,0.08); }
+        .perfume-card { background: var(--dark); padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden; }
+        .perfume-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--gold-dim); transition: background 0.3s; }
+        .perfume-card:hover { background: var(--dark-card); transform: translateY(-2px); z-index: 1; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .perfume-card:hover::before { background: var(--gold); }
+        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+        .card-category { font-family: 'Raleway', sans-serif; font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-dim); padding: 0.3rem 0.7rem; border: 1px solid rgba(201,168,76,0.2); }
+        .card-pg { font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--gold); font-weight: 700; }
+        .card-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem; line-height: 1.3; }
+        .card-brand { font-family: 'Raleway', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; }
+        .card-divider { height: 1px; background: rgba(201,168,76,0.1); margin: 1rem 0; }
+        .card-notes-label { font-family: 'Raleway', sans-serif; font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.7rem; }
+        .card-notes { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .note-tag { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; color: var(--white-dim); padding: 0.2rem 0.6rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); transition: all 0.2s; }
+        .perfume-card:hover .note-tag { border-color: rgba(201,168,76,0.2); color: var(--white); }
+        .footer { text-align: center; padding: 4rem 2rem; border-top: 1px solid rgba(201,168,76,0.1); }
+        .footer-logo { font-family: 'Playfair Display', serif; font-size: 1rem; letter-spacing: 0.3em; color: var(--gold-light); margin-bottom: 0.5rem; }
+        .footer-copy { font-family: 'Raleway', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="header-brand"><span>✦ </span>GOLDEN PERFUM<span> ✦</span></div>
+    <div class="header-sub">Catálogo Mujer</div>
+</header>
+<div class="hero">
+    <p class="hero-pre">✦ Colección Femenina ✦</p>
+    <h1 class="hero-title">FRAGANCIAS<br><em>para Mujer</em></h1>
+    <div class="hero-divider"></div>
+</div>
+<div class="search-wrap">
+    <input class="search-input" type="text" id="searchInput" placeholder="Buscar perfume, marca, nota olfativa...">
+</div>
+<div class="filters">
+    <button class="filter-btn active" onclick="filterBy('todos',event)">Todos</button>
+    <button class="filter-btn" onclick="filterBy('FLORAL FRUTAL',event)">Floral Frutal</button>
+    <button class="filter-btn" onclick="filterBy('FLORAL',event)">Floral</button>
+    <button class="filter-btn" onclick="filterBy('ORIENTAL',event)">Oriental</button>
+    <button class="filter-btn" onclick="filterBy('CHIPRE',event)">Chipre</button>
+    <button class="filter-btn" onclick="filterBy('AMADERADA',event)">Amaderada</button>
+    <button class="filter-btn" onclick="filterBy('CÍTRICA',event)">Cítrica</button>
+    <button class="filter-btn" onclick="filterBy('ÁMBAR',event)">Ámbar</button>
+    <button class="filter-btn" onclick="filterBy('ACUÁTICA',event)">Acuática</button>
+</div>
+<div id="catalogGrid" class="catalog-grid"></div>
+<footer class="footer">
+    <div class="footer-logo">✦ GOLDEN PERFUM ✦</div>
+    <p class="footer-copy">© 2025 · Todos los derechos reservados</p>
+</footer>
+<script>
+const perfumes = [
+    // Adolfo Domínguez
+    { pg:"Nº101", nombre:"Agua fresca de rosas", marca:"Adolfo Domínguez", categoria:"CHIPRE FLORAL", notas:["Rosa","Jazmín","Musgo de roble","Lirio","Sándalo"] },
+    { pg:"Nº227", nombre:"Única", marca:"Adolfo Domínguez", categoria:"FLORAL AMADERADA", notas:["Pimienta Rosa","Anís Estrellado","Jazmín Sambac","Peonía","Cedro","Praliné"] },
+    // Giorgio Armani
+    { pg:"Nº103", nombre:"Armani Code for women", marca:"Giorgio Armani", categoria:"FLORAL", notas:["Jazmín","Naranja Italiana","Flor del Naranjo","Jengibre","Miel","Vainilla"] },
+    { pg:"Nº104", nombre:"Acqua di Gio", marca:"Giorgio Armani", categoria:"FLORAL FRUTAL", notas:["Piña","Melocotón","Fresa","Jacinto","Sándalo","Cedro"] },
+    { pg:"Nº105", nombre:"Si", marca:"Giorgio Armani", categoria:"CHIPRE FRUTAL", notas:["Grosella Negra","Fresa","Rosa de Mayo","Vainilla","Pachulí","Notas Amaderadas"] },
+    { pg:"Nº106", nombre:"Aqua di Gioia", marca:"Giorgio Armani", categoria:"FLORAL ACUÁTICA", notas:["Limón","Menta","Pimienta rosa","Peonía","Cedro","Caña de azúcar"] },
+    { pg:"Nº210", nombre:"Because its you", marca:"Emporio Armani", categoria:"FLORAL FRUTAL", notas:["Vainilla","Frambuesa","Rosa","Nerolí","Limón","Notas Amaderadas"] },
+    { pg:"Nº229", nombre:"Sí, Passione", marca:"Giorgio Armani", categoria:"FLORAL FRUTAL", notas:["Pera","Naranja","Rosa","Piña","Cedro","Vainilla"] },
+    { pg:"Nº248", nombre:"My Way", marca:"Giorgio Armani", categoria:"FLORAL", notas:["Flor del Naranjo","Bergamota","Nardo","Jazmín","Vainilla","Cedro"] },
+    { pg:"Nº255", nombre:"Emporio Armani She", marca:"Giorgio Armani", categoria:"ORIENTAL VAINILLA", notas:["Nardo","Bergamota","Jazmín","Cedro","Lirio","Vainilla"] },
+    // Angel Schlesser
+    { pg:"Nº107", nombre:"Angel Schlesser Femme", marca:"Angel Schlesser", categoria:"FLORAL", notas:["Flor del Naranjo","Bergamota","Pimiento Morrón","Notas Amaderadas","Lirio","Cardamomo"] },
+    // Bvlgari
+    { pg:"Nº108", nombre:"Omnia crystalline", marca:"Bvlgari", categoria:"FLORAL ACUÁTICA", notas:["Bambú","Pera","Flor de loto","Casia","Musgo de roble","Madera de gaiac"] },
+    { pg:"Nº186", nombre:"Omnia coral", marca:"Bvlgari", categoria:"FLORAL FRUTAL", notas:["Bergamota","Goji Berries","Lirio de agua","Flor de Jamaica","Granada","Cedro"] },
+    { pg:"Nº236", nombre:"Jasmin noir", marca:"Bvlgari", categoria:"ORIENTAL FLORAL", notas:["Gardenia","Almendra","Jazmín Sambac","Haba tonka","Regaliz","Pachulí"] },
+    // Burberry
+    { pg:"Nº109", nombre:"Burberry women", marca:"Burberry", categoria:"FLORAL FRUTAL", notas:["Grosellas Negras","Melocotón","Manzana Verde","Jazmín","Vainilla","Musgo"] },
+    { pg:"Nº278", nombre:"Burberry Her EDT", marca:"Burberry", categoria:"FLORAL", notas:["Fresa","Frambuesa","Limón","Violeta","Vainilla","Notas Amaderadas"] },
+    { pg:"Nº294", nombre:"Goddess", marca:"Burberry", categoria:"FLORAL", notas:["Lavanda","Cacao","Vainilla caviar","Absoluto vainilla"] },
+    // Britney Spears
+    { pg:"Nº111", nombre:"Fantasy", marca:"Britney Spears", categoria:"FLORAL FRUTAL", notas:["Kiwi","Lichi rojo","Chocolate blanco","Orquídea","Lirio","Notas Amaderadas"] },
+    // Cacharel
+    { pg:"Nº112", nombre:"Catch me", marca:"Cacharel", categoria:"FLORAL", notas:["Mandarina","Anís Estrellado","Jazmín","Flor del Naranjo","Ámbar","Notas Amaderadas"] },
+    { pg:"Nº113", nombre:"Edén", marca:"Cacharel", categoria:"FLORAL FRUTAL", notas:["Melón","Melocotón","Limón","Mimosa","Rosa","Nardos"] },
+    { pg:"Nº190", nombre:"Amor amor", marca:"Cacharel", categoria:"FLORAL FRUTAL", notas:["Grosellas Negras","Bergamota","Albaricoque","Jazmín","Rosa","Cedro"] },
+    { pg:"Nº202", nombre:"Anais anais", marca:"Cacharel", categoria:"FLORAL", notas:["Flor del Naranjo","Lavanda","Clavel","Ylang ylang","Rosa","Sándalo"] },
+    { pg:"Nº221", nombre:"Yes i am", marca:"Cacharel", categoria:"ORIENTAL FLORAL", notas:["Frambuesa","Mandarina","Gardenia","Jazmín","Cardamomo","Regaliz"] },
+    { pg:"Nº226", nombre:"Noa", marca:"Cacharel", categoria:"FLORAL AMADERADA", notas:["Ciruela","Fresa","Jazmín","Rosa","Cilantro","Café"] },
+    { pg:"Nº270", nombre:"Yes I Am Glorious", marca:"Cacharel", categoria:"FLORAL FRUTAL", notas:["Mandarina","Melocotón","Frangipani","Magnolia","Leche","Chuches"] },
+    { pg:"Nº513", nombre:"Ella, Ella", marca:"Cacharel", categoria:"FLORAL FRUTAL", notas:["Coco","Bergamota","Jazmí Sambac","Flor del naranjo","Vainilla bourbon","Pachulí"] },
+    // Calvin Klein
+    { pg:"Nº123", nombre:"Euphoria", marca:"Calvin Klein", categoria:"ORIENTAL FLORAL", notas:["Granada","Flor de loto","Orquídea","Violeta","Ámbar","Caoba"] },
+    { pg:"Nº124", nombre:"CK ONE", marca:"Calvin Klein", categoria:"CÍTRICA", notas:["Papaya","Piña","Bergamota","Jazmín","Rosa","Cedro"] },
+    { pg:"Nº225", nombre:"Eternity", marca:"Calvin Klein", categoria:"FLORAL", notas:["Mandarina","Salvia","Clavel","Caléndula","Sándalo","Pachulí"] },
+    // Carolina Herrera
+    { pg:"Nº119", nombre:"CH", marca:"Carolina Herrera", categoria:"ORIENTAL FLORAL", notas:["Bergamota","Canela","Jazmín","Sándalo","Acuática","Madera de cachemira"] },
+    { pg:"Nº120", nombre:"212 VIP", marca:"Carolina Herrera", categoria:"ORIENTAL VAINILLA", notas:["Maracuyá","Ron","Gardenia","Ámbar","Haba tonka","Vainilla"] },
+    { pg:"Nº121", nombre:"212", marca:"Carolina Herrera", categoria:"FLORAL AMADERADA", notas:["Flor del Naranjo","Flor de Cactus","Camelia","Rosa","Peonía","Sándalo"] },
+    { pg:"Nº122", nombre:"212 VIP Rosé", marca:"Carolina Herrera", categoria:"FLORAL FRUTAL", notas:["Champagne","Melocotón","Rosa","Limón","Jazmín","Fresa"] },
+    { pg:"Nº192", nombre:"Good girl", marca:"Carolina Herrera", categoria:"ORIENTAL FLORAL", notas:["Almendra","Café","Jazmín Sambac","Nardos","Haba Tonka","Caco"] },
+    { pg:"Nº264", nombre:"Very Good Girl", marca:"Carolina Herrera", categoria:"FLORAL FRUTAL", notas:["Lichi","Grosella","Rosa","Vainilla","Vetiver"] },
+    { pg:"Nº273", nombre:"212 Heroes Forever Young", marca:"Carolina Herrera", categoria:"FLORAL FRUTAL", notas:["Mandarina","Frambuesa","Jazmín","Flor del naranjo","Cedro","Sándalo"] },
+    { pg:"Nº286", nombre:"Good Girl Blush", marca:"Carolina Herrera", categoria:"CHIPRE FLORAL", notas:["Bergamota","Almendra amarga","Peonía","Ylang Ylang","Vainilla"] },
+    { pg:"Nº512", nombre:"La Bomba", marca:"Carolina Herrera", categoria:"ORIENTAL FLORAL", notas:["Pitahaya","Peonía roja","Plumeria","Vainilla","Pachulí"] },
+    // Chanel
+    { pg:"Nº125", nombre:"Chanel Nº5", marca:"Chanel", categoria:"FLORAL", notas:["Nerolí","Melocotón","Jazmín","Rosa","Musgo de Roble","Pachulí"] },
+    { pg:"Nº126", nombre:"Coco eau de parfum", marca:"Chanel", categoria:"ORIENTAL ESPECIADA", notas:["Cilantro","Melocotón","Mimosa","Clavo","Ámbar","Vainilla"] },
+    { pg:"Nº127", nombre:"Coco Mademoiselle", marca:"Chanel", categoria:"ORIENTAL FLORAL", notas:["Bergamota","Naranja","Rosa","Jazmín","Pachulí","Vainilla"] },
+    { pg:"Nº128", nombre:"Allure", marca:"Chanel", categoria:"FLORAL", notas:["Limón","Maracuyá","Jazmín","Magnolia","Peonía","Sándalo"] },
+    { pg:"Nº194", nombre:"Chance eau de Parfum", marca:"Chanel", categoria:"CHIPRE FLORAL", notas:["Pimienta Rosa","Jazmín","Pachulí","Vainilla","Piña","Jacinto"] },
+    { pg:"Nº209", nombre:"Gabrielle", marca:"Chanel", categoria:"FLORAL", notas:["Grosellas Negras","Mandarina","Ylang ylang","Jazmín","Flor del Naranjo","Sándalo"] },
+    { pg:"Nº274", nombre:"Chance Eau Tendre", marca:"Chanel", categoria:"FLORAL FRUTAL", notas:["Membrillo","Pomelo","Jacinto","Jazmín","Iris","Cedro de Virginia"] },
+    { pg:"Nº500", nombre:"Paris – Venise", marca:"Chanel", categoria:"ORIENTAL", notas:["Limón","Pimienta rosa","Rosa","Geranio","Vainilla","Violeta"] },
+    { pg:"Nº501", nombre:"Paris – Deauville", marca:"Chanel", categoria:"CHIPRE", notas:["Albahaca","Lima","Naranja Siciliana","Jazmín","Rosa","Pachulí"] },
+    { pg:"Nº502", nombre:"Paris – Édimbourg", marca:"Chanel", categoria:"AMADERADA ACUÁTICA", notas:["Ciprés","Bayas de enebro","Lavanda","Cedro","Almizcle","Vainilla"] },
+    { pg:"Nº503", nombre:"Paris – Biarritz", marca:"Chanel", categoria:"FLORAL AMADERADA", notas:["Bergamota","Naranja","Nerolí","Notas verdes","Almizcle","Pachulí"] },
+    { pg:"Nº504", nombre:"Paris – Riviera", marca:"Chanel", categoria:"FLORAL FRUTAL", notas:["Cítricos","Flores","Nerolí","Jazmín","Benjuí","Sándalo"] },
+    { pg:"Nº516", nombre:"Chance Eau Splendide", marca:"Chanel", categoria:"FLORAL FRUTAL", notas:["Violeta","Durazno","Geranio de olor","Iris","Almizcle","Cedro"] },
+    // Cartier
+    { pg:"Nº205", nombre:"La Panthere", marca:"Cartier", categoria:"CHIPRE FLORAL", notas:["Ruibarbo","Anís","Gardenia","Rosa","Musgo","Pachulí"] },
+    // Chloe
+    { pg:"Nº129", nombre:"Chloe eau de parfum", marca:"Chloe", categoria:"ORIENTAL FLORAL", notas:["Peonía","Lichi","Rosa","Magnolia","Ámbar","Cedro"] },
+    { pg:"Nº130", nombre:"Love", marca:"Chloe", categoria:"FLORAL AMADERADA", notas:["Flor del Naranjo","Pimienta rosa","Iris","Lila","Arroz","Talco"] },
+    { pg:"Nº223", nombre:"Nomade", marca:"Chloe", categoria:"CHIPRE FLORAL", notas:["Musgo","Ciruela","Fresa","Jazmín","Flor del Cerezo","Sándalo"] },
+    // Clinique
+    { pg:"Nº131", nombre:"Aromatics elixir", marca:"Clinique", categoria:"CHIPRE FLORAL", notas:["Cilantro","Manzanilla","Clavel","Ylang ylang","Sándalo","Musgo"] },
+    { pg:"Nº132", nombre:"Clinique happy", marca:"Clinique", categoria:"FLORAL FRUTAL", notas:["Naranja","Ciruela","Orquídea","Fresa","Mimosa","Magnolia"] },
+    // Roberto Cavalli
+    { pg:"Nº134", nombre:"Just Cavalli", marca:"Roberto Cavalli", categoria:"FLORAL", notas:["Nerolí","Flor de tiaré","Palisandro"] },
+    // Dolce & Gabbana
+    { pg:"Nº135", nombre:"D&G Light Blue", marca:"Dolce & Gabbana", categoria:"FLORAL FRUTAL", notas:["Manzana","Campanilla","Limón","Rosa blanca","Bambú","Cedro"] },
+    { pg:"Nº136", nombre:"The One", marca:"Dolce & Gabbana", categoria:"ORIENTAL FLORAL", notas:["Mandarina","Lichi","Azucena","Jazmín","Vainilla","Vetiver"] },
+    { pg:"Nº139", nombre:"D&G Anthology L'imperatrice", marca:"Dolce & Gabbana", categoria:"FLORAL ACUÁTICA", notas:["Ruibarbo","Pimienta rosa","Jazmín","Sandía","Sándalo","Limón"] },
+    { pg:"Nº234", nombre:"The Only One", marca:"Dolce & Gabbana", categoria:"ORIENTAL VAINILLA", notas:["Bergamota","Naranja","Café","Rosa","Vainilla","Caramelo"] },
+    { pg:"Nº283", nombre:"Q by Dolce & Gabbana", marca:"Dolce & Gabbana", categoria:"FRUTAL", notas:["Limón","Naranja sanguina","Cereza","Heliotropos","Cedro"] },
+    { pg:"Nº292", nombre:"Devotion", marca:"Dolce & Gabbana", categoria:"ÁMBAR VAINILLA", notas:["Candied lemon","Flor de azahar","Panacota","Ron","Vainilla"] },
+    // Donna Karan
+    { pg:"Nº140", nombre:"DKNY", marca:"Donna Karan", categoria:"FLORAL FRUTAL", notas:["Naranja","Hojas de tomate","Orquídea","Flor del nenúfar","Sándalo","Pachulí"] },
+    { pg:"Nº141", nombre:"DNKY Be Delicious", marca:"Donna Karan", categoria:"FLORAL FRUTAL", notas:["Pomelo","Pepino","Nardos","Manzana","Notas Amaderadas","Sándalo"] },
+    // Elie Saab
+    { pg:"Nº145", nombre:"Le Parfum", marca:"Elie Saab", categoria:"FLORAL", notas:["Flor del naranjo","Jazmín","Pachulí","Cedro","Rosa","Miel"] },
+    // Escada
+    { pg:"Nº143", nombre:"Escada Magnetism", marca:"Escada", categoria:"ORIENTAL VAINILLA", notas:["Piña","Grosellas negras","Magnolia","Albahaca","Flor del almendro","Caramelo"] },
+    { pg:"Nº189", nombre:"Taj Sunset", marca:"Escada", categoria:"FLORAL FRUTAL", notas:["Mango","Naranja Sanguina","Flor de loto","Flor del nenúfar","Frambuesa","Coco"] },
+    { pg:"Nº237", nombre:"Fiesta Carioca", marca:"Escada", categoria:"FLORAL FRUTAL", notas:["Maracuyá","Frambuesa","Flor del naranjo","Jazmín","Cedro","Benjuí"] },
+    { pg:"Nº245", nombre:"Flor del sol", marca:"Escada", categoria:"FLORAL FRUTAL", notas:["Tequila","Granadina","Naranja","Dalia","Sándalo"] },
+    { pg:"Nº268", nombre:"Miami Blossom", marca:"Escada", categoria:"FLORAL FRUTAL", notas:["Sandía","Naranja","Jazmín","Piña","Sándalo","Nardos"] },
+    // Estée Lauder
+    { pg:"Nº144", nombre:"Pleasures", marca:"Estée Lauder", categoria:"FLORAL", notas:["Nardos","Violeta","Peonía","Sándalo","Rosa","Pachulí"] },
+    // Gucci
+    { pg:"Nº146", nombre:"Envy Me", marca:"Gucci", categoria:"FLORAL FRUTAL", notas:["Peonía","Piña","Mango","Rosa","Haba tonka","Tabaco"] },
+    { pg:"Nº147", nombre:"Gucci Rush", marca:"Gucci", categoria:"CHIPRE FRUTAL", notas:["Fresia","Melocotón","Cilantro","Jazmín","Vainilla","Vetiver"] },
+    { pg:"Nº195", nombre:"Flora by Gucci", marca:"Gucci", categoria:"FLORAL", notas:["Peonía","Mandarina","Olivo","Rosa","Sándalo","Pimienta rosa"] },
+    { pg:"Nº220", nombre:"Gucci Bloom", marca:"Gucci", categoria:"FLORAL", notas:["Jazmín","Lirio","Nardos","Madreselva","Madera"] },
+    { pg:"Nº285", nombre:"Flora Gorgeous Gardenia", marca:"Gucci", categoria:"FLORAL", notas:["Bayas rojas","Mandarina","Gardenia","Jazmín","Azúcar moreno","Pachulí"] },
+    // Guerlain
+    { pg:"Nº148", nombre:"Insolence", marca:"Guerlain", categoria:"FLORAL FRUTAL", notas:["Frambuesa","Limón","Flor del naranjo","Violeta","Iris","Haba tonka"] },
+    { pg:"Nº212", nombre:"Moon", marca:"Guerlain", categoria:"ORIENTAL AMADERADA", notas:["Lavanda","Bergamota","Jazmín Sambac","Vainilla","Sándalo"] },
+    // Givenchy
+    { pg:"Nº151", nombre:"Very Irresistible", marca:"Givenchy", categoria:"FLORAL FRUTAL", notas:["Casia","Anís","Rosa","Magnolia","Peonía","Rosa de taif"] },
+    { pg:"Nº235", nombre:"L'interdit", marca:"Givenchy", categoria:"FLORAL", notas:["Bergamota","Pera","Nardos","Flor del Naranjo","Pachulí","Vainilla"] },
+    { pg:"Nº249", nombre:"Irresistible Givenchy", marca:"Givenchy", categoria:"FLORAL FRUTAL", notas:["Pera","Cedro","Iris","Rosa"] },
+    // Halloween
+    { pg:"Nº507", nombre:"My Wish", marca:"Halloween", categoria:"FLORAL FRUTAL", notas:["Cereza","Grosellas Negras","Gardenia","Jazmín","Caramelo","Musgo"] },
+    // Hermès
+    { pg:"Nº152", nombre:"Un jardín Sur Le Nil", marca:"Hermès", categoria:"FLORAL FRUTAL", notas:["Zanahoria","Tomate","Naranja","Peonía","Sándalo","Olivo"] },
+    { pg:"Nº298", nombre:"Un Jardin en Méditerranée", marca:"Hermès", categoria:"FLORAL ACUÁTICA", notas:["Bergamota","Lima","Flor del naranjo","Adelfa blanca","Hojas de higuera","Pistacho"] },
+    { pg:"Nº510", nombre:"Barénia", marca:"Hermès", categoria:"CHIPRE FLORAL", notas:["Miracle berry","Bergamota","Ginger Lily","Pachulí","Roble"] },
+    // Hugo Boss
+    { pg:"Nº193", nombre:"Boss The Scent", marca:"Hugo Boss", categoria:"FLORAL FRUTAL", notas:["Melocotón","Fresa","Olivo","Cacao"] },
+    { pg:"Nº196", nombre:"Boss Ma Vie", marca:"Hugo Boss", categoria:"FLORAL", notas:["Flor de cactus","Fresa","Rosa","Cedro","Notas Amaderadas","Jazmín"] },
+    { pg:"Nº246", nombre:"Boss Alive", marca:"Hugo Boss", categoria:"FLORAL FRUTAL", notas:["Manzana","Grosellas negras","Ciruela","Canela","Jazmín","Tomillo"] },
+    // Issey Miyake
+    { pg:"Nº200", nombre:"L'eau d'Issey", marca:"Issey Miyake", categoria:"FLORAL ACUÁTICA", notas:["Melón","Rosa","Clavel","Peonía","Sándalo","Olivo"] },
+    { pg:"Nº262", nombre:"A Drop d'Issey", marca:"Issey Miyake", categoria:"FLORAL", notas:["Leche de almendra","Rosa Damasco","Lila","Anís Estrellado","Vainilla","Cedro del atlas"] },
+    // Jean Paul Gaultier
+    { pg:"Nº153", nombre:"Classique", marca:"Jean Paul Gaultier", categoria:"ORIENTAL FLORAL", notas:["Flor del naranjo","Rosa","Iris","Jengibre","Vainilla","Canela"] },
+    { pg:"Nº207", nombre:"Scandal", marca:"Jean Paul Gaultier", categoria:"CHIPRE FLORAL", notas:["Naranja sanguina","Gardenia","Miel","Pachulí"] },
+    { pg:"Nº247", nombre:"La belle", marca:"Jean Paul Gaultier", categoria:"ORIENTAL VAINILLA", notas:["Pera","Vetiver","Vainilla","Bergamota"] },
+    { pg:"Nº293", nombre:"Gaultier Divine", marca:"Jean Paul Gaultier", categoria:"FLORAL", notas:["Bayas rojas","Bergamota","Azucena","Jazmín","Merengue","Pachulí"] },
+    { pg:"Nº518", nombre:"La Belle Paradise Garden", marca:"Jean Paul Gaultier", categoria:"FLORAL", notas:["Flor de loto azul","Iris","Vainilla"] },
+    // Jesús del Pozo
+    { pg:"Nº154", nombre:"Halloween", marca:"Jesús del Pozo", categoria:"ORIENTAL FLORAL", notas:["Violeta","Hoja de plátano","Magnolia","Sándalo","Vainilla","Mirra"] },
+    // Juicy Couture
+    { pg:"Nº228", nombre:"Viva la Juicy", marca:"Juicy Couture", categoria:"FLORAL FRUTAL", notas:["Mandarina","Bayas","Madreselva","Gardenia","Vainilla","Caramelo"] },
+    // Kenzo
+    { pg:"Nº155", nombre:"Flower by Kenzo", marca:"Kenzo", categoria:"ORIENTAL FLORAL", notas:["Grosellas negras","Rosa Damascena","Jazmín","Rosa","Vainilla","Incienso"] },
+    // Lacoste
+    { pg:"Nº156", nombre:"Touch of Pink", marca:"Lacoste", categoria:"FLORAL FRUTAL", notas:["Naranja","Cardamomo","Cilantro","Violeta","Sándalo","Vainilla"] },
+    // Lancôme
+    { pg:"Nº157", nombre:"La Vie Est Belle", marca:"Lancôme", categoria:"FLORAL FRUTAL", notas:["Grosellas negras","Pera","Iris","Jazmín","Haba tonka","Vainilla"] },
+    { pg:"Nº158", nombre:"Poeme", marca:"Lancôme", categoria:"FLORAL", notas:["Grosellas negras","Amapola","Mimosa","Nardos","Rosa","Haba Tonka"] },
+    { pg:"Nº159", nombre:"O de Lancôme", marca:"Lancôme", categoria:"CÍTRICA", notas:["Madreselva","Bergamota","Limón","Romero","Cilantro","Albahaca"] },
+    { pg:"Nº216", nombre:"Miracle", marca:"Lancôme", categoria:"FLORAL", notas:["Lichi","Fresa","Jengibre","Mandarina","Jazmín","Ámbar"] },
+    { pg:"Nº217", nombre:"Tresor", marca:"Lancôme", categoria:"ORIENTAL FLORAL", notas:["Lila","Rosa","Iris","Jazmín","Vainilla","Melocotón"] },
+    { pg:"Nº242", nombre:"Idôle", marca:"Lancôme", categoria:"CHIPRE FLORAL", notas:["Bergamota","Pera","Rosa","Rosa de mayo","Jazmín","Vainilla"] },
+    { pg:"Nº297", nombre:"La Vie Est Belle Iris Absolu", marca:"Lancôme", categoria:"FLORAL FRUTAL", notas:["Grosellas negras","Higo","Flor de azahar","Jazmín","Iris","Acuerdos golosos"] },
+    { pg:"Nº506", nombre:"La Vie est Belle L'Elixir", marca:"Lancôme", categoria:"FLORAL FRUTAL", notas:["Frambuesa","Licor","Hojas de violeta","Rosa","Cuero","Manteca de cacao"] },
+    { pg:"Nº508", nombre:"La Vie Est Belle Rose Extraordinaire", marca:"Lancôme", categoria:"ORIENTAL FLORAL", notas:["Bergamota","Naranja","Rosa Damasco","Rosa","Sándalo","Musgo"] },
+    // Loewe
+    { pg:"Nº160", nombre:"Aire de Loewe", marca:"Loewe", categoria:"FLORAL", notas:["Albahaca","Caléndula","Clavel","Rosa","Sándalo","Cedro"] },
+    { pg:"Nº161", nombre:"Agua de Loewe", marca:"Loewe", categoria:"AMADERADA", notas:["Bergamota","Naranja","Té","Pimienta blanca","Sándalo","Cedro"] },
+    { pg:"Nº163", nombre:"Quizás quizás", marca:"Loewe", categoria:"FLORAL", notas:["Limón","Casia","Jazmín","Nardo","Vainilla","Pachulí"] },
+    { pg:"Nº232", nombre:"Solo Loewe Ella", marca:"Loewe", categoria:"ORIENTAL FLORAL", notas:["Naranja","Manzana","Jazmín","Violeta","Cedro","Ámbar"] },
+    { pg:"Nº257", nombre:"Loewe Aura White Magnolia", marca:"Loewe", categoria:"CHIPRE FLORAL", notas:["Algodón de azúcar","Magnolia","Vainilla","Yuzu"] },
+    { pg:"Nº282", nombre:"Paula's Ibiza", marca:"Loewe", categoria:"FLORAL ACUÁTICA", notas:["Coco","Mandarina","Trozos de madera a la deriva","Narciso","Pachulí","Vainilla"] },
+    // Lolita Lempicka
+    { pg:"Nº201", nombre:"Lolita Lempicka", marca:"Lolita Lempicka", categoria:"FLORAL FRUTAL", notas:["Violeta","Anís Estrellado","Regaliz","Cereza","Haba Tonka","Praliné"] },
+    // Marc Jacobs
+    { pg:"Nº197", nombre:"Decadence", marca:"Marc Jacobs", categoria:"ORIENTAL FLORAL", notas:["Ciruela","Azafrán","Rosa","Jazmín","Lirio","Papiro de Egipto"] },
+    { pg:"Nº218", nombre:"Daisy", marca:"Marc Jacobs", categoria:"FLORAL AMADERADA", notas:["Violeta","Naranja Sanguina","Gardenia","Maderas blancas","Vainilla","Fresa"] },
+    { pg:"Nº253", nombre:"Perfect", marca:"Marc Jacobs", categoria:"FLORAL AMADERADA", notas:["Ruibarbo","Narciso","Leche de almendra","Madera de cachemira","Cedro"] },
+    // Moschino
+    { pg:"Nº164", nombre:"Cheap & Chic", marca:"Moschino", categoria:"FLORAL", notas:["Bergamota","Violeta","Rosa","Peonía","Vainilla","Orquídea"] },
+    { pg:"Nº287", nombre:"Toy 2 Bubble Gum", marca:"Moschino", categoria:"FLORAL FRUTAL", notas:["Frutas confitadas","Limón","Goma de mascar","Moras","Melocotón","Canela"] },
+    // Narciso Rodríguez
+    { pg:"Nº166", nombre:"Narciso Rodríguez for her", marca:"Narciso Rodríguez", categoria:"FLORAL FRUTAL", notas:["Rosa","Melocotón","Ámbar","Sándalo","Pachulí"] },
+    { pg:"Nº167", nombre:"Essence", marca:"Narciso Rodríguez", categoria:"FLORAL", notas:["Iris","Rosa","Benjuí"] },
+    { pg:"Nº168", nombre:"Narciso", marca:"Narciso Rodríguez", categoria:"FLORAL FRUTAL", notas:["Gardenia","Rosa blanca","Cedro","Vetiver"] },
+    { pg:"Nº238", nombre:"Narciso Rouge", marca:"Narciso Rodríguez", categoria:"FLORAL FRUTAL", notas:["Iris","Rosa","Flor del naranjo","Nardos","Cedro","Haba Tonka"] },
+    { pg:"Nº240", nombre:"Pure musc for her", marca:"Narciso Rodríguez", categoria:"FLORAL", notas:["Ylang ylang","Cachemira","Cedro","Jazmín"] },
+    { pg:"Nº280", nombre:"Narciso Eau Néroli Ambrée", marca:"Narciso Rodríguez", categoria:"FLORAL", notas:["Nerolí","Flor del naranjo","Frangipani","Ámbar","Cedro"] },
+    { pg:"Nº291", nombre:"All Of Me", marca:"Narciso Rodríguez", categoria:"FLORAL", notas:["Magnolia","Rosa","Geranio","Sándalo"] },
+    // Nina Ricci
+    { pg:"Nº165", nombre:"Nina", marca:"Nina Ricci", categoria:"FLORAL FRUTAL", notas:["Limón","Lima","Manzana","Peonía","Praliné","Cedro"] },
+    { pg:"Nº206", nombre:"Luna", marca:"Nina Ricci", categoria:"ORIENTAL VAINILLA", notas:["Bayas Silvestres","Flor de naranjo","Caramelo","Siempreviva","Sándalo","Vainilla"] },
+    { pg:"Nº509", nombre:"Vénus", marca:"Nina Ricci", categoria:"CHIPRE FLORAL", notas:["Mandarina","Hoja de magnolia","Magnolia","Jazmín","Pachulí","Vainilla"] },
+    // Paco Rabanne
+    { pg:"Nº169", nombre:"Ultraviolet", marca:"Paco Rabanne", categoria:"ORIENTAL FLORAL", notas:["Cilantro","Pimiento morrón","Olivo","Violeta","Rosa","Pachulí"] },
+    { pg:"Nº170", nombre:"Lady Million", marca:"Paco Rabanne", categoria:"FLORAL FRUTAL", notas:["Nerolí","Limón","Frambuesa","Jazmín","Gardenia","Miel"] },
+    { pg:"Nº171", nombre:"Olympea", marca:"Paco Rabanne", categoria:"ORIENTAL FLORAL", notas:["Mandarina","Jazmín","Vainilla","Sal","Cachemira","Sándalo"] },
+    { pg:"Nº230", nombre:"Pure XS for Her", marca:"Paco Rabanne", categoria:"ORIENTAL FLORAL", notas:["Ylang ylang","Palomitas de maíz","Sándalo","Melocotón","Coco","Flor del naranjo"] },
+    { pg:"Nº250", nombre:"Lady Million Empire", marca:"Paco Rabanne", categoria:"CHIPRE FLORAL", notas:["Grosellas rojas","Naranja","Iris","Magnolia","Fresa","Ciruela"] },
+    { pg:"Nº265", nombre:"Black XS for Her", marca:"Paco Rabanne", categoria:"FLORAL AMADERADA", notas:["Arándanos","Pimienta rosa","Cacao","Vainilla","Pachulí","Rosa"] },
+    { pg:"Nº276", nombre:"Fame", marca:"Paco Rabanne", categoria:"FLORAL AMADERADA", notas:["Mango","Bergamota","Jazmín","Incienso de olivano","Sándalo","Vainilla"] },
+    { pg:"Nº299", nombre:"Million Gold", marca:"Paco Rabanne", categoria:"FLORAL AMADERADA", notas:["Pera","Rosa","Ylang ylang","Jazmín","Musgo","Vainilla"] },
+    // Prada
+    { pg:"Nº219", nombre:"Prada Candy", marca:"Prada", categoria:"ORIENTAL VAINILLA", notas:["Caramelo","Talco","Vainilla","Benjuí"] },
+    { pg:"Nº254", nombre:"Infusion d'Iris", marca:"Prada", categoria:"FLORAL AMADERADA", notas:["Nerolí","Naranja","Iris","Gálbano","Cedro","Benjuí"] },
+    { pg:"Nº279", nombre:"Prada Paradoxe", marca:"Prada", categoria:"FLORAL", notas:["Pera","Bergamota","Vainilla","Jazmín","Ámbar"] },
+    { pg:"Nº515", nombre:"Paradoxe intense", marca:"Prada", categoria:"ORIENTAL FLORAL", notas:["Pera","Bergamota","Jazmín","Musgo","Vainilla","Ámbar"] },
+    // Ralph Lauren
+    { pg:"Nº172", nombre:"Ralph", marca:"Ralph Lauren", categoria:"FLORAL FRUTAL", notas:["Olivo","Mandarina","Magnolia","Fresa","Iris"] },
+    // Rochas
+    { pg:"Nº173", nombre:"Eau de Rochas", marca:"Rochas", categoria:"CÍTRICA", notas:["Lima","Mandarina","Albahaca","Bergamota","Sándalo","Clavel"] },
+    { pg:"Nº204", nombre:"Mademoiselle Rochas", marca:"Rochas", categoria:"FLORAL FRUTAL", notas:["Grosellas negras","Manzana caramelizada","Jazmín","Rosa","Sándalo","Ámbar"] },
+    { pg:"Nº258", nombre:"Girl", marca:"Rochas", categoria:"FLORAL AMADERADA", notas:["Grosellas negras","Nerolí","Jazmín","Orquídea","Vainilla","Cedro"] },
+    { pg:"Nº517", nombre:"Audace", marca:"Rochas", categoria:"FLORAL FRUTAL", notas:["Frambuesa","Mandarina","Nardo","Flor del naranjo","Haba tonka","Sándalo"] },
+    // Shiseido
+    { pg:"Nº267", nombre:"Ginza", marca:"Shiseido", categoria:"FLORAL FRUTAL", notas:["Granada","Pimienta rosa","Orquídea","Magnolia","Pachulí","Sándalo"] },
+    // Sisley
+    { pg:"Nº174", nombre:"Eau du Soir", marca:"Sisley", categoria:"CHIPRE FLORAL", notas:["Pomelo","Mandarina","Clavel","Rosa","Lirio","Pimienta"] },
+    // Thierry Mugler
+    { pg:"Nº175", nombre:"Angel", marca:"Thierry Mugler", categoria:"ORIENTAL VAINILLA", notas:["Melón","Coco","Miel","Orquídea","Haba tonka","Chocolate"] },
+    { pg:"Nº177", nombre:"Alien", marca:"Thierry Mugler", categoria:"ORIENTAL AMADERADA", notas:["Jazmín","Notas Amaderadas","Ámbar"] },
+    { pg:"Nº211", nombre:"Aura", marca:"Thierry Mugler", categoria:"AMADERADA", notas:["Ruibarbo","Flor del naranjo","Vainilla","Notas Amaderadas","Jazmín","Limón"] },
+    { pg:"Nº251", nombre:"Angel Nova", marca:"Thierry Mugler", categoria:"ORIENTAL FLORAL", notas:["Frambuesa","Lichi","Rosa damasco","Notas Amaderadas","Benjuí"] },
+    { pg:"Nº269", nombre:"Alien Goddess", marca:"Mugler", categoria:"FLORAL", notas:["Agua de coco","Bergamota","Jazmín","Heliotropos","Vainilla"] },
+    { pg:"Nº295", nombre:"Angel Elixir", marca:"Mugler", categoria:"FLORAL FRUTAL", notas:["Pimienta rosa","Jazmín","Ylang-Ylang","Sándalo","Vainilla","Azahar"] },
+    // Tommy Hilfiger
+    { pg:"Nº233", nombre:"Tommy Girl", marca:"Tommy Hilfiger", categoria:"FLORAL FRUTAL", notas:["Grosellas negras","Camelia","Menta","Limón","Magnolia","Madreselva"] },
+    { pg:"Nº260", nombre:"Tommy Girl Now", marca:"Tommy Hilfiger", categoria:"FLORAL AMADERADA", notas:["Bergamota","Mandarina","Cachemira","Menta","Magnolia"] },
+    // Tous
+    { pg:"Nº178", nombre:"Tous", marca:"Tous", categoria:"FLORAL", notas:["Casia","Violeta","Peonía","Jazmín","Gardenia","Iris"] },
+    { pg:"Nº179", nombre:"Touch", marca:"Tous", categoria:"FLORAL FRUTAL", notas:["Flor de loto","Fresa","Moras","Almendra","Jazmín","Vainilla"] },
+    { pg:"Nº259", nombre:"LoveMe", marca:"Tous", categoria:"FLORAL FRUTAL", notas:["Pomelo","Pimienta rosa","Peonía","Rosa de damasco","Cedro","Musgo"] },
+    { pg:"Nº275", nombre:"LoveMe The Onyx Parfum", marca:"Tous", categoria:"FLORAL", notas:["Avellana","Heliotropos","Peonía","Orquídea negra","Sándalo","Vainilla"] },
+    { pg:"Nº296", nombre:"LoveMe The Emerald Elixir", marca:"Tous", categoria:"ÁMBAR", notas:["Pera","Naranja","Jazmín","Violeta","Pachulí","Vainilla"] },
+    // Valentino
+    { pg:"Nº181", nombre:"Valentina", marca:"Valentino", categoria:"ORIENTAL FLORAL", notas:["Bergamota","Trufa","Nardo","Jazmín","Cedro","Ámbar"] },
+    { pg:"Nº288", nombre:"Valentino Donna Born In Roma", marca:"Valentino", categoria:"FLORAL", notas:["Grosella","Pimienta rosa","Jazmín","Té de jazmín","Vainilla","Madera de Gaiac"] },
+    // Versace
+    { pg:"Nº180", nombre:"Eros Pour Femme", marca:"Versace", categoria:"FLORAL AMADERADA", notas:["Limón","Sándalo","Granada","Jazmín sambac","Peonía","Notas amaderadas"] },
+    { pg:"Nº224", nombre:"Bright Crystal", marca:"Versace", categoria:"FLORAL FRUTAL", notas:["Granada","Notas acuática","Flor de loto","Peonía","Caoba","Ámbar"] },
+    { pg:"Nº290", nombre:"Versace Pour Femme Dylan Purple", marca:"Versace", categoria:"FLORAL FRUTAL", notas:["Pera","Bergamota","Fresia","Mahonial","Cedro de virginia","Árbol de Belambra"] },
+    // Victorio & Lucchino
+    { pg:"Nº222", nombre:"Agua de Rocío", marca:"Victorio & Lucchino", categoria:"FLORAL VERDE", notas:["Flor del naranjo","Bergamota","Limón","Nerolí","Cedro","Sándalo"] },
+    // Viktor & Rolf
+    { pg:"Nº182", nombre:"Flowerbomb", marca:"Viktor&Rolf", categoria:"ORIENTAL FLORAL", notas:["Bergamota","Fresa","Té","Orquídea","Jazmín","Pachulí"] },
+    { pg:"Nº261", nombre:"Bonbon", marca:"Viktor&Rolf", categoria:"FLORAL FRUTAL", notas:["Melocotón","Mandarina","Caramelo","Jazmín","Cedro","Sándalo"] },
+    // Yves Saint Laurent
+    { pg:"Nº183", nombre:"Paris", marca:"Yves Saint Laurent", categoria:"FLORAL", notas:["Mimosa","Geranio","Iris","Rosa","Violeta","Sándalo"] },
+    { pg:"Nº184", nombre:"Opium", marca:"Yves Saint Laurent", categoria:"ORIENTAL ESPECIADA", notas:["Cilantro","Pimienta","Clavos de olor","Clavel","Canela","Vainilla"] },
+    { pg:"Nº185", nombre:"Black Opium", marca:"Yves Saint Laurent", categoria:"ORIENTAL VAINILLA", notas:["Pimienta","Pera","Jazmín","Almendra","Regaliz","Vainilla"] },
+    { pg:"Nº191", nombre:"Rive Gauche", marca:"Yves Saint Laurent", categoria:"FLORAL ALDEHÍDICA", notas:["Madreselva","Melocotón","Magnolia","Gardenia","Sándalo","Haba tonka"] },
+    { pg:"Nº199", nombre:"Mon Paris", marca:"Yves Saint Laurent", categoria:"CHIPRE FRUTAL", notas:["Fresa","Bergamota","Naranja","Peonía","Pachulí","Vainilla"] },
+    { pg:"Nº244", nombre:"Libre", marca:"Yves Saint Laurent", categoria:"ORIENTAL", notas:["Mandarina","Lavanda","Grosella negra","Flor del naranjo","Jazmín","Vainilla"] },
+    { pg:"Nº263", nombre:"Elle", marca:"Yves Saint Laurent", categoria:"FLORAL AMADERADA", notas:["Lichi","Peonía","Rosa","Pachulí","Cedro"] },
+    { pg:"Nº514", nombre:"Libre Intense", marca:"Yves Saint Laurent", categoria:"ORIENTAL FOUGÈRE", notas:["Lavanda","Bergamota","Jazmí Sambac","Orquídea","Vainilla de madagascar","Haba tonka"] },
+    // Zadig & Voltaire
+    { pg:"Nº214", nombre:"This is her", marca:"Zadig & Voltaire", categoria:"ORIENTAL VAINILLA", notas:["Pimienta rosa","Castañas","Sándalo","Jazmín","Cachemira","Vainilla"] },
+    { pg:"Nº511", nombre:"Zadig Eau de Parfum", marca:"Zadig & Voltaire", categoria:"ORIENTAL FLORAL", notas:["Sesamo","Jengibre","Flor de azahar","Esencia de neroli","Chantilly","Crema de vainilla"] },
+    // Dior
+    { pg:"Nº114", nombre:"J'adore", marca:"Christian Dior", categoria:"FLORAL FRUTAL", notas:["Melón","Pera","Ciruela","Orquídea","Vainilla","Zarzamora"] },
+    { pg:"Nº115", nombre:"Miss Dior Cherie", marca:"Christian Dior", categoria:"CHIPRE FRUTAL", notas:["Mandarina","Piña","Jazmín","Palomitas De maíz","Pachulí","Ámbar"] },
+    { pg:"Nº116", nombre:"Dior Addict", marca:"Christian Dior", categoria:"ORIENTAL FLORAL", notas:["Zarzamora","Flor del Naranjo","Rosa","Sándalo","Haba tonka","Vainilla"] },
+    { pg:"Nº117", nombre:"Escale a Portofino", marca:"Christian Dior", categoria:"CÍTRICA", notas:["Bergamota","Limón","Almendra","Bayas de Enebro","Cedro","Ciprés"] },
+    { pg:"Nº118", nombre:"Pure Poison", marca:"Christian Dior", categoria:"FLORAL", notas:["Bergamota","Jazmín","Flor del Naranjo","Gardenia","Sándalo","Cedro"] },
+    { pg:"Nº215", nombre:"Poison Girl", marca:"Christian Dior", categoria:"ORIENTAL VAINILLA", notas:["Naranja","Limón","Rosa de Damasco","Flor del Naranjo","Haba tonka","Almendra"] },
+    { pg:"Nº231", nombre:"Joy", marca:"Christian Dior", categoria:"FLORAL", notas:["Bergamota","Mandarina","Rosa","Jazmín","Sándalo","Cedro"] },
+    { pg:"Nº266", nombre:"Hypnotic Poison", marca:"Christian Dior", categoria:"ORIENTAL VAINILLA", notas:["Coco","Ciruela","Rosa","Jazmín","Vainilla","Almendras"] },
+    { pg:"Nº505", nombre:"J'adore L'Or", marca:"Dior", categoria:"FLORAL", notas:["Jazmín","Flor de azahar","Violeta","Lirio de los valles","Rosa"] },
+];
+
+let activeFilter = 'todos';
+
+function renderCards(list) {
+    const grid = document.getElementById('catalogGrid');
+    if (list.length === 0) {
+        grid.innerHTML = '<div style="padding:4rem;text-align:center;color:var(--muted);font-family:Cormorant Garamond,serif;font-size:1.2rem;font-style:italic;grid-column:1/-1;">No se encontraron fragancias</div>';
+        return;
+    }
+    grid.innerHTML = list.map(p => `
+        <div class="perfume-card">
+            <div class="card-top">
+                <span class="card-category">${p.categoria}</span>
+                <span class="card-pg">${p.pg}</span>
+            </div>
+            <div class="card-name">${p.nombre}</div>
+            <div class="card-brand">${p.marca}</div>
+            <div class="card-divider"></div>
+            <div class="card-notes-label">Notas olfativas</div>
+            <div class="card-notes">${p.notas.map(n => `<span class="note-tag">${n}</span>`).join('')}</div>
+        </div>
+    `).join('');
+}
+
+function filterBy(filter, e) {
+    activeFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    applyFilters();
+}
+
+function applyFilters() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    let list = perfumes;
+    if (activeFilter !== 'todos') {
+        list = list.filter(p => p.categoria.toUpperCase().includes(activeFilter.toUpperCase()));
+    }
+    if (q) {
+        list = list.filter(p =>
+            p.nombre.toLowerCase().includes(q) ||
+            p.marca.toLowerCase().includes(q) ||
+            p.notas.some(n => n.toLowerCase().includes(q)) ||
+            p.categoria.toLowerCase().includes(q) ||
+            p.pg.toLowerCase().includes(q)
+        );
+    }
+    renderCards(list);
+}
+
+document.getElementById('searchInput').addEventListener('input', applyFilters);
+renderCards(perfumes);
+</script>
+</body>
+</html>
